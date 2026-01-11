@@ -8,7 +8,9 @@
 
 body {
   margin: 0;
-  background: linear-gradient(135deg, #0f172a, #111827);
+  background: radial-gradient(circle at 20% 20%, rgba(253, 198, 79, 0.35), transparent 30%),
+    radial-gradient(circle at 80% 10%, rgba(94, 204, 255, 0.25), transparent 30%),
+    linear-gradient(135deg, #0f172a, #0b1224 50%, #0f172a);
 }
 
 a {
