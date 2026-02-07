@@ -13,6 +13,7 @@ env:
   REGION: ${{ secrets.GCP_REGION }}
   SERVICE_NAME: next-app
   REPOSITORY: web
+  DEPLOYER_SA: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
   IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web/next-app:${{ github.sha }}
 
 jobs:
@@ -52,6 +53,7 @@ jobs:
       - name: Build and push image
         run: |
           gcloud builds submit \
+            --service-account "projects/${PROJECT_ID}/serviceAccounts/${DEPLOYER_SA}" \
             --tag "${IMAGE}"
 
       - name: Deploy to Cloud Run
@@ -59,4 +61,5 @@ jobs:
           gcloud run deploy "${SERVICE_NAME}" \
             --image "${IMAGE}" \
             --region "${REGION}" \
+            --service-account "${DEPLOYER_SA}" \
             --allow-unauthenticated
